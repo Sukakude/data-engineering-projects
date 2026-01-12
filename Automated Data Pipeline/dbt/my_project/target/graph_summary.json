@@ -1,0 +1,1 @@
+{"_invocation_id": "b2cd5dc9-dd86-4843-83f6-2ce1f868b7d9", "linked": {"0": {"name": "source.my_project.dev.weather", "type": "source", "succ": [1]}, "1": {"name": "model.my_project.stg_weather", "type": "model", "succ": [2, 3]}, "2": {"name": "model.my_project.daily_average", "type": "model"}, "3": {"name": "model.my_project.weather_report", "type": "model"}}}
