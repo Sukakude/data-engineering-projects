@@ -1,7 +1,7 @@
 # Automated Data Pipeline with Airflow, dbt, PostgreSQL & Superset
 
 # High Level Architecture
-![Alt text](./images/Automated Data Pipeline.svg)
+<img src="./images/Automated Data Pipeline.svg" alt="Architecture Diagram" width="500"/>
 
 ## Overview
 This repository contains the code to build an **automated data pipeline** using:
