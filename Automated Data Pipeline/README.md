@@ -1,5 +1,8 @@
 # Automated Data Pipeline with Airflow, dbt, PostgreSQL & Superset
 
+# High Level Architecture
+![Alt text](./images/Automated Data Pipeline.svg)
+
 ## Overview
 This repository contains the code to build an **automated data pipeline** using:
 - **Apache Airflow** for workflow orchestration & scheduling.
