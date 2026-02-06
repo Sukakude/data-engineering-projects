@@ -1,0 +1,45 @@
+sources:
+  - name: dev
+    database: ecommerce_db
+    tables:
+      - name: raw_customers
+        columns:
+          - name: id
+          - name: email
+          - name: username
+          - name: firstname
+          - name: lastname
+          - name: phone
+          - name: inserted_at
+      - name: raw_address
+        columns:
+          - name: id
+          - name: customer_id
+          - name: city
+          - name: street
+          - name: zipcode
+          - name: country
+          - name: inserted_at
+      - name: raw_products
+        columns:
+          - name: id
+          - name: name
+          - name: price
+          - name: description
+          - name: category
+          - name: brand
+          - name: stock
+          - name: image
+          - name: rating
+          - name: inserted_at
+      - name: raw_orders
+        columns:
+          - name: id
+          - name: product_id
+          - name: customer_id
+          - name: quantity
+          - name: total_amount
+          - name: status
+          - name: order_date
+          - name: delivery_date
+          - name: inserted_at
