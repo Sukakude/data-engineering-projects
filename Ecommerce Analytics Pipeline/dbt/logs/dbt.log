@@ -1,0 +1,76 @@
+[0m09:52:41.939512 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70a9b442f260>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70a9b19742f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70a9b20f5040>]}
+
+
+============================== 09:52:41.943526 | f70ea220-80e6-405f-9dbe-4a80a0dd5eef ==============================
+[0m09:52:41.943526 [info ] [MainThread]: Running with dbt=1.11.2
+[0m09:52:41.944290 [debug] [MainThread]: running dbt with arguments {'use_experimental_parser': 'False', 'log_path': 'logs', 'invocation_command': 'dbt init', 'use_colors': 'True', 'empty': 'None', 'debug': 'False', 'quiet': 'False', 'log_cache_events': 'False', 'profiles_dir': '/home/tshep/.dbt', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'send_anonymous_usage_stats': 'True', 'version_check': 'True', 'no_print': 'None', 'indirect_selection': 'eager', 'introspect': 'True', 'write_json': 'True', 'log_format': 'default', 'partial_parse': 'True', 'static_parser': 'True', 'cache_selected_only': 'False', 'printer_width': '80', 'target_path': 'None', 'warn_error': 'None', 'fail_fast': 'False'}
+[0m09:52:48.870251 [debug] [MainThread]: Starter project path: /home/tshep/repos/ecommerce-analytics-pipeline/venv/lib/python3.12/site-packages/dbt/include/starter_project
+[0m09:52:48.880734 [info ] [MainThread]: 
+Your new dbt project "ecommerce_pipeline" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m09:52:48.882189 [info ] [MainThread]: Setting up your profile.
+[0m09:53:49.265249 [info ] [MainThread]: Profile ecommerce_pipeline written to /home/tshep/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m09:53:49.268913 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 67.413956, "process_in_blocks": "0", "process_kernel_time": 0.323823, "process_mem_max_rss": "103780", "process_out_blocks": "88", "process_user_time": 2.72508}
+[0m09:53:49.270589 [debug] [MainThread]: Command `dbt init` succeeded at 09:53:49.270222 after 67.42 seconds
+[0m09:53:49.272781 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70a9b20569f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70a9b1846330>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70a9b0eb71a0>]}
+[0m09:53:49.275843 [debug] [MainThread]: Flushing usage events
+[0m09:53:51.655375 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m10:58:57.925325 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x71cf408f08f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x71cf4334ede0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x71cf41411100>]}
+
+
+============================== 10:58:57.929971 | af553c89-3127-483a-a682-7b74a6aa3a24 ==============================
+[0m10:58:57.929971 [info ] [MainThread]: Running with dbt=1.11.2
+[0m10:58:57.930819 [debug] [MainThread]: running dbt with arguments {'introspect': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'no_print': 'None', 'target_path': 'None', 'static_parser': 'True', 'use_colors': 'True', 'partial_parse': 'True', 'version_check': 'True', 'fail_fast': 'False', 'debug': 'False', 'send_anonymous_usage_stats': 'True', 'warn_error': 'None', 'use_experimental_parser': 'False', 'quiet': 'False', 'cache_selected_only': 'False', 'printer_width': '80', 'log_format': 'default', 'invocation_command': 'dbt run', 'profiles_dir': '/home/tshep/.dbt', 'log_path': 'logs', 'empty': 'False', 'log_cache_events': 'False', 'indirect_selection': 'eager', 'write_json': 'True'}
+[0m10:58:57.931442 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/tshep/repos/ecommerce-analytics-pipeline/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m10:58:57.932514 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.0766557, "process_in_blocks": "0", "process_kernel_time": 0.208062, "process_mem_max_rss": "99888", "process_out_blocks": "24", "process_user_time": 1.728518}
+[0m10:58:57.933293 [debug] [MainThread]: Command `dbt run` failed at 10:58:57.933128 after 0.08 seconds
+[0m10:58:57.933729 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x71cf44bb33e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x71cf41331ee0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x71cf408f08f0>]}
+[0m10:58:57.934230 [debug] [MainThread]: Flushing usage events
+[0m10:59:00.226619 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m10:31:50.075211 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x736dbf0c5dc0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x736dc115b380>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x736dbf75d340>]}
+
+
+============================== 10:31:50.122352 | 48a89d94-2331-400e-a83c-8b79a63b3216 ==============================
+[0m10:31:50.122352 [info ] [MainThread]: Running with dbt=1.11.2
+[0m10:31:50.123978 [debug] [MainThread]: running dbt with arguments {'cache_selected_only': 'False', 'debug': 'False', 'log_cache_events': 'False', 'printer_width': '80', 'indirect_selection': 'eager', 'version_check': 'True', 'introspect': 'True', 'send_anonymous_usage_stats': 'True', 'no_print': 'None', 'quiet': 'False', 'use_colors': 'True', 'write_json': 'True', 'partial_parse': 'True', 'static_parser': 'True', 'use_experimental_parser': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'empty': 'False', 'warn_error': 'None', 'profiles_dir': '/home/tshep/repos/ecommerce-analytics-pipeline/dbt', 'log_format': 'default', 'target_path': 'None', 'fail_fast': 'False', 'invocation_command': 'dbt run', 'log_path': 'logs'}
+[0m10:31:50.125174 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/tshep/repos/ecommerce-analytics-pipeline/dbt/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m10:31:50.127225 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.13080873, "process_in_blocks": "8", "process_kernel_time": 0.216241, "process_mem_max_rss": "99456", "process_out_blocks": "8", "process_user_time": 1.818031}
+[0m10:31:50.128375 [debug] [MainThread]: Command `dbt run` failed at 10:31:50.128137 after 0.13 seconds
+[0m10:31:50.129183 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x736dbe887140>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x736dbe598650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x736dbec621e0>]}
+[0m10:31:50.130337 [debug] [MainThread]: Flushing usage events
+[0m10:31:55.665514 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m10:51:10.778110 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f99e39cb530>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f99e1d51520>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f99e1e74e60>]}
+
+
+============================== 10:51:10.827011 | ff81a89e-27db-41c4-b16b-6e27e50c6b04 ==============================
+[0m10:51:10.827011 [info ] [MainThread]: Running with dbt=1.11.2
+[0m10:51:10.829521 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'fail_fast': 'False', 'log_path': 'logs', 'version_check': 'True', 'profiles_dir': '/home/tshep/repos/ecommerce-analytics-pipeline/dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'invocation_command': 'dbt deps', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m10:51:10.831049 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/tshep/repos/ecommerce-analytics-pipeline/dbt/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m10:51:10.833233 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f99e39cb530>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f99e0f9a2d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f99e0f9aed0>]}
+[0m10:51:10.834164 [debug] [MainThread]: Flushing usage events
+[0m10:51:12.762759 [debug] [MainThread]: An error was encountered while trying to flush usage events

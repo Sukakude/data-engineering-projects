@@ -1,0 +1,199 @@
+x-superset-user: &superset-user root
+x-superset-volumes: &superset-volumes
+  # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
+  - ./docker:/app/docker
+  # - ./superset:/app/superset
+  - ./superset-core:/app/superset-core 
+  - ./docker/superset_config.py:/app/pythonpath/superset_config.py # mounted
+  - superset_data:/app/data
+
+
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    hostname: ecommerce_postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ecommerce_db
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    volumes:
+      - ./postgres/data:/var/lib/postgres/data
+      - ./postgres/airflow_init.sql:/docker-entrypoint-initdb.d/airflow_init.sql
+      - ./postgres/superset_init.sql:/docker-entrypoint-initdb.d/superset_init.sql
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ecommerce_db"] 
+      interval: 10s 
+      timeout: 5s 
+      retries: 5
+    networks:
+      - ecommerce_network
+
+  airflow-postgres:
+    image: postgres:latest
+    hostname: airflow_postgres
+    networks:
+      - ecommerce_network
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  init-airflow:
+    image: apache/airflow:3.1.6
+    depends_on:
+      airflow-postgres:
+        condition: service_healthy
+    networks:
+      - ecommerce_network
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql://airflow:airflow@postgres/airflow
+      AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+      AIRFLOW_ADMIN_USERNAME: admin
+      AIRFLOW_ADMIN_PASSWORD: admin
+    command: >
+      bash -c "airflow db migrate"
+
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: root
+    ports:
+      - "8080:8080"
+    depends_on:
+      airflow-postgres:
+        condition: service_healthy
+      init-airflow:
+        condition: service_completed_successfully
+    networks:
+      - ecommerce_network
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./ingestion:/opt/airflow/ingestion
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./dbt/ecommerce_pipeline:/opt/airflow/dbt/ecommerce_pipeline
+      - ./dbt/profiles.yml:/opt/airflow/dbt/profiles.yml
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "airflow db check"]
+      timeout: 10s
+      interval: 10s
+      retries: 5
+    command: >
+      bash -c "airflow db migrate && airflow standalone"
+
+  # AIRFLOW SCHEDULER
+  airflow-scheduler:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    user: root
+    depends_on:
+      airflow-postgres:
+        condition: service_healthy
+      webserver:
+        condition: service_completed_successfully
+      init-airflow:
+        condition: service_completed_successfully
+    networks:
+      - ecommerce_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./dbt:/dbt
+      - ~/.dbt:/root/.dbt
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - LOAD_EX=n
+      - EXECUTOR=Local
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__FERNET_KEY=hDCE4B-bdyhsHrh1NHifFqOLvEA7bHXx4CKv0Mqyf_c=
+      - AIRFLOW__WEBSERVER__DEFAULT__USER_USERNAME=airflow
+      - AIRFLOW__WEBSERVER__DEFAULT__USER_PASSWORD=airflow
+      - AIRFLOW_WWW_USER_USERNAME=airflow
+      - AIRFLOW_WWW_USER_PASSWORD=airflow
+      - AIRFLOW__WEBSERVER__SECRET_KEY=secret
+    command: scheduler
+  
+  # SUPERSET
+  superset-init:
+    image: apache/superset:3.0.0-py310
+    container_name: superset_init
+    command: ["/app/docker/docker-init.sh"]
+    env_file:
+      - path: docker/.env # default
+        required: true
+    depends_on:
+      postgres: 
+        condition: service_started
+      redis: 
+        condition: service_started
+    user: *superset-user
+    volumes: *superset-volumes
+    environment:
+      SUPERSET_LOAD_EXAMPLES: "no"
+      SUPERSET_LOG_LEVEL: "${SUPERSET_LOG_LEVEL:-info}"
+      DATABASE_DB: "superset_db"
+    healthcheck:
+      disable: true
+    networks:
+      - ecommerce_network
+
+  superset:
+    env_file:
+      - path: docker/.env # default
+        required: true
+    image: apache/superset:3.0.0-py310
+    container_name: superset_app
+    command: ["/app/docker/docker-bootstrap.sh", "app"]
+    restart: unless-stopped
+    ports:
+      - 8088:8088
+    user: *superset-user
+    depends_on:
+      superset-init:
+        condition: service_completed_successfully
+    volumes: *superset-volumes
+    environment:
+      SUPERSET_LOG_LEVEL: "${SUPERSET_LOG_LEVEL:-info}"
+      DATABASE_DB: "superset_db"
+    networks:
+      - ecommerce_network
+
+  redis:
+    image: redis:7
+    container_name: superset_cache
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis:/data
+    networks:
+      - ecommerce_network
+
+networks:
+  ecommerce_network:
+    driver: bridge
+
+volumes:
+  redis:
+    external: false
+  superset_data:
+    external: false
