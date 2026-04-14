@@ -1,0 +1,35 @@
+{
+    "schemaName": "order_dim",
+    "dimensionFieldSpecs": [
+        {
+            "name": "order_line_id",
+            "dataType": "STRING"
+        },
+        {
+            "name": "transaction_id",
+            "dataType": "STRING"
+        },
+        {
+            "name": "product_id",
+            "dataType": "STRING"
+        }
+    ],
+    "metricFieldSpecs": [
+        {
+            "name": "quantity",
+            "dataType": "DOUBLE"
+        },
+        {
+            "name": "unit_price",
+            "dataType": "DOUBLE"
+        },
+        {
+            "name": "discount",
+            "dataType": "DOUBLE"
+        },
+        {
+            "name": "line_total",
+            "dataType": "DOUBLE"
+        }
+    ]
+}

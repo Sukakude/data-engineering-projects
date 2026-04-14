@@ -1,0 +1,14 @@
+{
+    "schemaName": "customer_dim",
+    "dimensionFieldSpecs": [
+        {
+            "name": "customer_id",
+            "dataType": "STRING"
+        },
+        {
+            "name": "full_name",
+            "dataType": "STRING"
+        }
+    ],
+    "metricFieldSpecs": []
+}

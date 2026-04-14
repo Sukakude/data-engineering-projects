@@ -1,0 +1,22 @@
+{
+    "schemaName": "store_dim",
+    "dimensionFieldSpecs": [
+        {
+            "name": "store_id",
+            "dataType": "STRING"
+        },
+        {
+            "name": "store_name",
+            "dataType": "STRING"
+        },
+        {
+            "name": "city",
+            "dataType": "STRING"
+        },
+        {
+            "name": "region",
+            "dataType": "STRING"
+        }
+    ],
+    "metricFieldSpecs": []
+}
